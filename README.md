@@ -4,16 +4,16 @@
 
 ### Phase 1: Expand the bare skeleton safely
 
-1. Add section headers/comments for `.data` and `.code` layout.
-2. Add an empty `.data` section.
-3. Add constants for deck size, max hand size, and action values.
-4. Add base state variables (player/dealer totals, counts, flags).
-5. Add deck storage and hand storage arrays.
-6. Add string placeholders for title, prompts, and result messages.
-7. Add procedure prototypes for all game phases.
-8. Update `main` to call high-level phase procedures only.
-9. Add empty/stub procedures with `ret` for each prototype.
-10. Assemble and verify the scaffold still builds.
+1. [x] Add section headers/comments for `.data` and `.code` layout.
+2. [x] Add an empty `.data` section.
+3. [x] Add constants for deck size, max hand size, and action values.
+4. [x] Add base state variables (player/dealer totals, counts, flags).
+5. [x] Add deck storage and hand storage arrays.
+6. [x] Add string placeholders for title, prompts, and result messages.
+7. [ ] Add procedure prototypes for all game phases.
+8. [ ] Update `main` to call high-level phase procedures only.
+9. [ ] Add empty/stub procedures with `ret` for each prototype.
+10. [ ] Assemble and verify the scaffold still builds.
 
 ### Phase 2: Round state and reset flow
 
