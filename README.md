@@ -10,10 +10,10 @@
 4. [x] Add base state variables (player/dealer totals, counts, flags).
 5. [x] Add deck storage and hand storage arrays.
 6. [x] Add string placeholders for title, prompts, and result messages.
-7. [ ] Add procedure prototypes for all game phases.
-8. [ ] Update `main` to call high-level phase procedures only.
-9. [ ] Add empty/stub procedures with `ret` for each prototype.
-10. [ ] Assemble and verify the scaffold still builds.
+7. [x] Add procedure prototypes for all game phases.
+8. [x] Update `main` to call high-level phase procedures only.
+9. [x] Add empty/stub procedures with `ret` for each prototype.
+10. [x] Assemble and verify the scaffold still builds.
 
 ### Phase 2: Round state and reset flow
 
