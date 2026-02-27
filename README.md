@@ -17,16 +17,16 @@
 
 ### Phase 2: Round state and reset flow
 
-11. Add a reset procedure outline to clear round state.
-12. Add placeholder steps in reset for hand counters.
-13. Add placeholder steps in reset for totals/flags.
-14. Add a call from `main` to reset at round start.
-15. Add a replay/continue round flag variable.
-16. Add a high-level game loop outline in `main`.
-17. Add a clean branch for exiting the loop.
-18. Add a placeholder call for replay prompt flow.
-19. Add a stub replay prompt procedure.
-20. Assemble and verify loop structure compiles.
+11. [x] Add a reset procedure outline to clear round state.
+12. [x] Add placeholder steps in reset for hand counters.
+13. [x] Add placeholder steps in reset for totals/flags.
+14. [x] Add a call from `main` to reset at round start.
+15. [x] Add a replay/continue round flag variable.
+16. [x] Add a high-level game loop outline in `main`.
+17. [x] Add a clean branch for exiting the loop.
+18. [x] Add a placeholder call for replay prompt flow.
+19. [x] Add a stub replay prompt procedure.
+20. [x] Assemble and verify loop structure compiles.
 
 ### Phase 3: Deck lifecycle (structure first)
 
