@@ -30,16 +30,16 @@
 
 ### Phase 3: Deck lifecycle (structure first)
 
-21. Add a deck-init procedure outline.
-22. Add placeholder comments/labels for filling 52 cards.
-23. Add a shuffle procedure outline.
-24. Add placeholder loop structure for shuffle pass.
-25. Add a deck index or draw pointer variable.
-26. Add a draw-card procedure signature and return contract comment.
-27. Add draw-card stub behavior (no full logic yet).
-28. Add calls in round setup: init, shuffle, then deal.
-29. Add an out-of-cards handling placeholder procedure.
-30. Assemble and verify deck procedure wiring compiles.
+21. [x] Add a deck-init procedure outline.
+22. [x] Add placeholder comments/labels for filling 52 cards.
+23. [x] Add a shuffle procedure outline.
+24. [x] Add placeholder loop structure for shuffle pass.
+25. [x] Add a deck index or draw pointer variable.
+26. [x] Add a draw-card procedure signature and return contract comment.
+27. [x] Add draw-card stub behavior (no full logic yet).
+28. [x] Add calls in round setup: init, shuffle, then deal.
+29. [x] Add an out-of-cards handling placeholder procedure.
+30. [x] Assemble and verify deck procedure wiring compiles.
 
 ### Phase 4: Dealing and hand accounting
 
