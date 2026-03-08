@@ -43,16 +43,16 @@
 
 ### Phase 4: Dealing and hand accounting
 
-31. Add procedure outline to deal opening hands.
-32. Add placeholder call order for alternating player/dealer draws.
-33. Add procedure outline to add a card to player hand.
-34. Add procedure outline to add a card to dealer hand.
-35. Add procedure outline to recalculate player total.
-36. Add procedure outline to recalculate dealer total.
-37. Add ace-handling placeholder plan in total procedures.
-38. Add call points after each card draw to refresh totals.
-39. Add sanity-check placeholders for max cards in hand.
-40. Assemble and verify dealing flow compiles.
+31. [x] Add procedure outline to deal opening hands.
+32. [x] Add placeholder call order for alternating player/dealer draws.
+33. [x] Add procedure outline to add a card to player hand.
+34. [x] Add procedure outline to add a card to dealer hand.
+35. [x] Add procedure outline to recalculate player total.
+36. [x] Add procedure outline to recalculate dealer total.
+37. [x] Add ace-handling placeholder plan in total procedures.
+38. [x] Add call points after each card draw to refresh totals.
+39. [x] Add sanity-check placeholders for max cards in hand.
+40. [x] Assemble and verify dealing flow compiles.
 
 ### Phase 5: Player turn flow
 

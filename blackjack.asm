@@ -9,6 +9,11 @@ DeckInit PROTO
 ShuffleDeck PROTO
 DrawCard PROTO
 HandleOutOfCards PROTO
+DealOpeningHands PROTO
+AddCardToPlayer PROTO
+AddCardToDealer PROTO
+RecalcPlayerTotal PROTO
+RecalcDealerTotal PROTO
 DrawTable PROTO
 SetupRound PROTO
 PlayerTurn PROTO
@@ -115,6 +120,57 @@ HandleOutOfCards PROC
     ret
 HandleOutOfCards ENDP
 
+DealOpeningHands PROC
+    ; Placeholder order: Player, Dealer, Player, Dealer.
+    call AddCardToPlayer
+    call RecalcPlayerTotal
+    call AddCardToDealer
+    call RecalcDealerTotal
+    call AddCardToPlayer
+    call RecalcPlayerTotal
+    call AddCardToDealer
+    call RecalcDealerTotal
+    ret
+DealOpeningHands ENDP
+
+AddCardToPlayer PROC
+    ; Placeholder safety: stop drawing if the hand is full.
+    cmp playerCount, MAX_HAND_SIZE
+    jae PlayerHandFull
+    call DrawCard
+    mov ebx, playerCount
+    mov playerHand[ebx], al
+    inc playerCount
+PlayerHandFull:
+    ret
+AddCardToPlayer ENDP
+
+AddCardToDealer PROC
+    ; Placeholder safety: stop drawing if the hand is full.
+    cmp dealerCount, MAX_HAND_SIZE
+    jae DealerHandFull
+    call DrawCard
+    mov ebx, dealerCount
+    mov dealerHand[ebx], al
+    inc dealerCount
+DealerHandFull:
+    ret
+AddCardToDealer ENDP
+
+RecalcPlayerTotal PROC
+    ; Placeholder: recompute player total from playerHand.
+    ; Ace plan: count Aces as 11, then downgrade to 1 if total busts.
+    mov playerTotal, 0
+    ret
+RecalcPlayerTotal ENDP
+
+RecalcDealerTotal PROC
+    ; Placeholder: recompute dealer total from dealerHand.
+    ; Ace plan: count Aces as 11, then downgrade to 1 if total busts.
+    mov dealerTotal, 0
+    ret
+RecalcDealerTotal ENDP
+
 DrawTable PROC
     ret
 DrawTable ENDP
@@ -122,8 +178,7 @@ DrawTable ENDP
 SetupRound PROC
     call DeckInit
     call ShuffleDeck
-    ; Placeholder: opening deal will use DrawCard.
-    call DrawCard
+    call DealOpeningHands
     ret
 SetupRound ENDP
 
