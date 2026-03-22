@@ -56,16 +56,16 @@
 
 ### Phase 5: Player turn flow
 
-41. Add player turn procedure outline.
-42. Add loop skeleton for repeated player action.
-43. Add prompt/display placeholder for hit-or-stand input.
-44. Add input validation branch skeleton.
-45. Add hit branch placeholder (draw + recompute + bust check).
-46. Add stand branch placeholder (exit loop).
-47. Add immediate blackjack check placeholder at turn start.
-48. Add bust end-turn branch placeholder.
-49. Add return status flag from player turn.
-50. Assemble and verify turn-control branches compile.
+41. [x] Add player turn procedure outline.
+42. [x] Add loop skeleton for repeated player action.
+43. [x] Add prompt/display placeholder for hit-or-stand input.
+44. [x] Add input validation branch skeleton.
+45. [x] Add hit branch placeholder (draw + recompute + bust check).
+46. [x] Add stand branch placeholder (exit loop).
+47. [x] Add immediate blackjack check placeholder at turn start.
+48. [x] Add bust end-turn branch placeholder.
+49. [x] Add return status flag from player turn.
+50. [x] Assemble and verify turn-control branches compile.
 
 ### Phase 6: Dealer turn and outcome resolution
 

@@ -29,6 +29,10 @@ DECK_SIZE = 52
 MAX_HAND_SIZE = 12
 ACTION_HIT = 1
 ACTION_STAND = 2
+TURN_RESULT_NONE = 0
+TURN_RESULT_STAND = 1
+TURN_RESULT_BUST = 2
+TURN_RESULT_BLACKJACK = 3
 gameState DWORD 5 DUP(0) ; player/dealer totals, counts, flags
 deck BYTE DECK_SIZE DUP(0)
 playerHand BYTE MAX_HAND_SIZE DUP(0)
@@ -41,6 +45,10 @@ dealerTotal DWORD 0
 roundFlags DWORD 0
 continueRound DWORD 1
 deckIndex DWORD 0
+actionChoice DWORD ACTION_STAND
+playerTurnStatus DWORD TURN_RESULT_NONE
+promptHitStand BYTE "Hit(1) or Stand(2)?",0
+invalidActionMsg BYTE "Invalid action. Use 1 or 2.",0
 
 
 .code ; procedures and flow
@@ -68,6 +76,8 @@ ResetRound PROC
     mov playerTotal, 0
     mov dealerTotal, 0
     mov roundFlags, 0
+    mov actionChoice, ACTION_STAND
+    mov playerTurnStatus, TURN_RESULT_NONE
     ret
 ResetRound ENDP
 
@@ -183,6 +193,50 @@ SetupRound PROC
 SetupRound ENDP
 
 PlayerTurn PROC
+    mov playerTurnStatus, TURN_RESULT_NONE
+    cmp playerTotal, 21
+    jne PlayerActionLoop
+    mov playerTurnStatus, TURN_RESULT_BLACKJACK
+    mov eax, playerTurnStatus
+    ret
+PlayerActionLoop:
+    ; Placeholder prompt/display for hit-or-stand.
+    call Crlf
+    mov edx, OFFSET promptHitStand
+    call WriteString
+    call Crlf
+    ; Placeholder input path until ReadInt integration.
+    mov actionChoice, ACTION_STAND
+ValidatePlayerAction:
+    cmp actionChoice, ACTION_HIT
+    je PlayerHit
+    cmp actionChoice, ACTION_STAND
+    je PlayerStand
+    ; Placeholder invalid-input branch.
+    mov edx, OFFSET invalidActionMsg
+    call WriteString
+    call Crlf
+    mov actionChoice, ACTION_STAND
+    jmp ValidatePlayerAction
+PlayerHit:
+    call AddCardToPlayer
+    call RecalcPlayerTotal
+    cmp playerTotal, 21
+    ja PlayerBust
+    cmp playerTotal, 21
+    je PlayerBlackjack
+    jmp PlayerActionLoop
+PlayerStand:
+    mov playerTurnStatus, TURN_RESULT_STAND
+    mov eax, playerTurnStatus
+    ret
+PlayerBust:
+    mov playerTurnStatus, TURN_RESULT_BUST
+    mov eax, playerTurnStatus
+    ret
+PlayerBlackjack:
+    mov playerTurnStatus, TURN_RESULT_BLACKJACK
+    mov eax, playerTurnStatus
     ret
 PlayerTurn ENDP
 
