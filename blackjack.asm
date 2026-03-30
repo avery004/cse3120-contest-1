@@ -20,6 +20,7 @@ PlayerTurn PROTO
 DealerTurn PROTO
 ResolveRound PROTO
 RenderRound PROTO
+UpdateScore PROTO
 PromptReplay PROTO
 ShutdownGame PROTO
 
@@ -33,6 +34,10 @@ TURN_RESULT_NONE = 0
 TURN_RESULT_STAND = 1
 TURN_RESULT_BUST = 2
 TURN_RESULT_BLACKJACK = 3
+ROUND_RESULT_NONE = 0
+ROUND_RESULT_PLAYER_WIN = 1
+ROUND_RESULT_DEALER_WIN = 2
+ROUND_RESULT_PUSH = 3
 gameState DWORD 5 DUP(0) ; player/dealer totals, counts, flags
 deck BYTE DECK_SIZE DUP(0)
 playerHand BYTE MAX_HAND_SIZE DUP(0)
@@ -47,6 +52,11 @@ continueRound DWORD 1
 deckIndex DWORD 0
 actionChoice DWORD ACTION_STAND
 playerTurnStatus DWORD TURN_RESULT_NONE
+dealerTurnStatus DWORD TURN_RESULT_NONE
+roundResult DWORD ROUND_RESULT_NONE
+dealerLoopGuard DWORD 0
+playerScore DWORD 0
+dealerScore DWORD 0
 promptHitStand BYTE "Hit(1) or Stand(2)?",0
 invalidActionMsg BYTE "Invalid action. Use 1 or 2.",0
 
@@ -78,6 +88,9 @@ ResetRound PROC
     mov roundFlags, 0
     mov actionChoice, ACTION_STAND
     mov playerTurnStatus, TURN_RESULT_NONE
+    mov dealerTurnStatus, TURN_RESULT_NONE
+    mov roundResult, ROUND_RESULT_NONE
+    mov dealerLoopGuard, 0
     ret
 ResetRound ENDP
 
@@ -241,16 +254,81 @@ PlayerBlackjack:
 PlayerTurn ENDP
 
 DealerTurn PROC
+    ; Placeholder: dealer hits until 17 or more.
+    mov dealerTurnStatus, TURN_RESULT_NONE
+    mov dealerLoopGuard, 0
+DealerActionLoop:
+    cmp dealerTotal, 17
+    jae DealerStand
+    cmp dealerLoopGuard, MAX_HAND_SIZE
+    jae DealerStand
+    inc dealerLoopGuard
+    call AddCardToDealer
+    call RecalcDealerTotal
+    ; Placeholder bust check branch.
+    cmp dealerTotal, 21
+    ja DealerBust
+    jmp DealerActionLoop
+DealerStand:
+    mov dealerTurnStatus, TURN_RESULT_STAND
+    ret
+DealerBust:
+    mov dealerTurnStatus, TURN_RESULT_BUST
     ret
 DealerTurn ENDP
 
 ResolveRound PROC
+    mov roundResult, ROUND_RESULT_NONE
+    ; Priority 1: bust outcomes.
+    cmp playerTurnStatus, TURN_RESULT_BUST
+    je ResultDealerWin
+    cmp dealerTurnStatus, TURN_RESULT_BUST
+    je ResultPlayerWin
+    ; Priority 2: blackjack outcomes, including blackjack-vs-blackjack tie.
+    cmp playerTurnStatus, TURN_RESULT_BLACKJACK
+    jne CheckDealerBlackjack
+    cmp dealerTotal, 21
+    je ResultPush
+    jmp ResultPlayerWin
+CheckDealerBlackjack:
+    cmp dealerTotal, 21
+    je ResultDealerWin
+    ; Priority 3: compare totals for stand scenarios.
+    mov eax, playerTotal
+    cmp eax, dealerTotal
+    ja ResultPlayerWin
+    jb ResultDealerWin
+    jmp ResultPush
+ResultPlayerWin:
+    mov roundResult, ROUND_RESULT_PLAYER_WIN
+    jmp ApplyScoreUpdate
+ResultDealerWin:
+    mov roundResult, ROUND_RESULT_DEALER_WIN
+    jmp ApplyScoreUpdate
+ResultPush:
+    mov roundResult, ROUND_RESULT_PUSH
+ApplyScoreUpdate:
+    call UpdateScore
     ret
 ResolveRound ENDP
 
 RenderRound PROC
     ret
 RenderRound ENDP
+
+UpdateScore PROC
+    ; Placeholder: update running score/balance from roundResult.
+    cmp roundResult, ROUND_RESULT_PLAYER_WIN
+    jne CheckDealerScore
+    inc playerScore
+    ret
+CheckDealerScore:
+    cmp roundResult, ROUND_RESULT_DEALER_WIN
+    jne ScoreDone
+    inc dealerScore
+ScoreDone:
+    ret
+UpdateScore ENDP
 
 PromptReplay PROC
     ; Placeholder: default to stop until input logic is implemented.

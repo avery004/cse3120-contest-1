@@ -69,16 +69,16 @@
 
 ### Phase 6: Dealer turn and outcome resolution
 
-51. Add dealer turn procedure outline.
-52. Add dealer loop skeleton for "hit until 17+" rule.
-53. Add dealer bust check placeholder.
-54. Add procedure outline for round result resolution.
-55. Add result-priority branch order placeholder comments.
-56. Add result state variable (player win/dealer win/push).
-57. Add blackjack-vs-blackjack tie placeholder handling.
-58. Add hooks for balance/score update procedure.
-59. Add score update procedure stub.
-60. Assemble and verify dealer + resolve flow compiles.
+51. [x] Add dealer turn procedure outline.
+52. [x] Add dealer loop skeleton for "hit until 17+" rule.
+53. [x] Add dealer bust check placeholder.
+54. [x] Add procedure outline for round result resolution.
+55. [x] Add result-priority branch order placeholder comments.
+56. [x] Add result state variable (player win/dealer win/push).
+57. [x] Add blackjack-vs-blackjack tie placeholder handling.
+58. [x] Add hooks for balance/score update procedure.
+59. [x] Add score update procedure stub.
+60. [x] Assemble and verify dealer + resolve flow compiles.
 
 ### Phase 7: Rendering and user messaging
 
