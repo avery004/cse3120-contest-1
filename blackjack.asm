@@ -15,6 +15,11 @@ AddCardToDealer PROTO
 RecalcPlayerTotal PROTO
 RecalcDealerTotal PROTO
 DrawTable PROTO
+RenderPlayerHand PROTO
+RenderDealerHand PROTO
+RenderStatusLine PROTO
+RenderStartupScreen PROTO
+RenderRoundSummary PROTO
 SetupRound PROTO
 PlayerTurn PROTO
 DealerTurn PROTO
@@ -59,6 +64,18 @@ playerScore DWORD 0
 dealerScore DWORD 0
 promptHitStand BYTE "Hit(1) or Stand(2)?",0
 invalidActionMsg BYTE "Invalid action. Use 1 or 2.",0
+titleText BYTE "BLACKJACK - MASM + Irvine32",0
+subtitleText BYTE "Phase 7 UI scaffolding active.",0
+tableTop BYTE "+--------------------------------------+",0
+tableDealerRow BYTE "| Dealer Area                          |",0
+tablePlayerRow BYTE "| Player Area                          |",0
+tableBottom BYTE "+--------------------------------------+",0
+dealerHandLabel BYTE "Dealer Hand:",0
+playerHandLabel BYTE "Player Hand:",0
+hiddenCardMsg BYTE "[Hidden dealer card placeholder]",0
+dealerRevealMsg BYTE "[Dealer cards revealed placeholder]",0
+statusLineText BYTE "Status: Round in progress placeholder",0
+summaryLineText BYTE "Summary: Round result placeholder",0
 
 
 .code ; procedures and flow
@@ -76,6 +93,7 @@ main ENDP
 
 InitializeGame PROC
     mov continueRound, 1
+    call RenderStartupScreen
     ret
 InitializeGame ENDP
 
@@ -97,6 +115,9 @@ ResetRound ENDP
 RunGame PROC
     call SetupRound
     call DrawTable
+    call RenderDealerHand
+    call RenderPlayerHand
+    call RenderStatusLine
     call PlayerTurn
     call DealerTurn
     call ResolveRound
@@ -195,8 +216,84 @@ RecalcDealerTotal PROC
 RecalcDealerTotal ENDP
 
 DrawTable PROC
+    mov eax, lightGreen + (black * 16)
+    call SetTextColor
+    mov edx, OFFSET tableTop
+    call WriteString
+    call Crlf
+    mov edx, OFFSET tableDealerRow
+    call WriteString
+    call Crlf
+    mov edx, OFFSET tablePlayerRow
+    call WriteString
+    call Crlf
+    mov edx, OFFSET tableBottom
+    call WriteString
+    call Crlf
     ret
 DrawTable ENDP
+
+RenderPlayerHand PROC
+    mov eax, white + (black * 16)
+    call SetTextColor
+    mov edx, OFFSET playerHandLabel
+    call WriteString
+    call Crlf
+    ret
+RenderPlayerHand ENDP
+
+RenderDealerHand PROC
+    mov eax, white + (black * 16)
+    call SetTextColor
+    mov edx, OFFSET dealerHandLabel
+    call WriteString
+    call Crlf
+    cmp roundResult, ROUND_RESULT_NONE
+    jne DealerRevealAll
+    ; Placeholder: hide dealer hole card until round resolves.
+    mov edx, OFFSET hiddenCardMsg
+    call WriteString
+    call Crlf
+    ret
+DealerRevealAll:
+    mov edx, OFFSET dealerRevealMsg
+    call WriteString
+    call Crlf
+    ret
+RenderDealerHand ENDP
+
+RenderStatusLine PROC
+    mov eax, lightCyan + (black * 16)
+    call SetTextColor
+    mov edx, OFFSET statusLineText
+    call WriteString
+    call Crlf
+    ret
+RenderStatusLine ENDP
+
+RenderStartupScreen PROC
+    call Clrscr
+    mov eax, yellow + (black * 16)
+    call SetTextColor
+    mov edx, OFFSET titleText
+    call WriteString
+    call Crlf
+    mov eax, lightGray + (black * 16)
+    call SetTextColor
+    mov edx, OFFSET subtitleText
+    call WriteString
+    call Crlf
+    ret
+RenderStartupScreen ENDP
+
+RenderRoundSummary PROC
+    mov eax, lightMagenta + (black * 16)
+    call SetTextColor
+    mov edx, OFFSET summaryLineText
+    call WriteString
+    call Crlf
+    ret
+RenderRoundSummary ENDP
 
 SetupRound PROC
     call DeckInit
@@ -313,6 +410,10 @@ ApplyScoreUpdate:
 ResolveRound ENDP
 
 RenderRound PROC
+    call RenderDealerHand
+    call RenderPlayerHand
+    call RenderStatusLine
+    call RenderRoundSummary
     ret
 RenderRound ENDP
 

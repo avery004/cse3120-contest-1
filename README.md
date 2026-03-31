@@ -82,16 +82,16 @@
 
 ### Phase 7: Rendering and user messaging
 
-61. Add table-draw procedure outline.
-62. Add player-hand render procedure outline.
-63. Add dealer-hand render procedure outline.
-64. Add hidden-hole-card placeholder branch for dealer render.
-65. Add status-line render procedure outline.
-66. Add startup screen/title procedure outline.
-67. Add end-of-round summary render procedure outline.
-68. Add call sequence for render points during round flow.
-69. Add color/style placeholder calls (`SetTextColor`) where needed.
-70. Assemble and verify UI procedure wiring compiles.
+61. [x] Add table-draw procedure outline.
+62. [x] Add player-hand render procedure outline.
+63. [x] Add dealer-hand render procedure outline.
+64. [x] Add hidden-hole-card placeholder branch for dealer render.
+65. [x] Add status-line render procedure outline.
+66. [x] Add startup screen/title procedure outline.
+67. [x] Add end-of-round summary render procedure outline.
+68. [x] Add call sequence for render points during round flow.
+69. [x] Add color/style placeholder calls (`SetTextColor`) where needed.
+70. [x] Assemble and verify UI procedure wiring compiles.
 
 ### Phase 8: Validation, polish, and final pass
 
