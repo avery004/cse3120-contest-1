@@ -1,114 +1,87 @@
-# Blackjack in Assembly
+# Blackjack (MASM + Irvine32)
 
-## Completion Plan
+Console Blackjack implemented in x86 assembly using MASM and the Irvine32 library.
 
-### Phase 1: Expand the bare skeleton safely
+## Overview
 
-1. [x] Add section headers/comments for `.data` and `.code` layout.
-2. [x] Add an empty `.data` section.
-3. [x] Add constants for deck size, max hand size, and action values.
-4. [x] Add base state variables (player/dealer totals, counts, flags).
-5. [x] Add deck storage and hand storage arrays.
-6. [x] Add string placeholders for title, prompts, and result messages.
-7. [x] Add procedure prototypes for all game phases.
-8. [x] Update `main` to call high-level phase procedures only.
-9. [x] Add empty/stub procedures with `ret` for each prototype.
-10. [x] Assemble and verify the scaffold still builds.
+This project implements a playable Blackjack game loop with:
 
-### Phase 2: Round state and reset flow
+- deck creation and shuffle
+- player turn (`Hit` / `Stand`) with input validation
+- dealer turn (hit until 17 or higher)
+- hand scoring with Ace adjustment (11 -> 1 when needed)
+- round result resolution (win / lose / push)
+- running scoreboard across rounds
+- replay prompt for continuous play
 
-11. [x] Add a reset procedure outline to clear round state.
-12. [x] Add placeholder steps in reset for hand counters.
-13. [x] Add placeholder steps in reset for totals/flags.
-14. [x] Add a call from `main` to reset at round start.
-15. [x] Add a replay/continue round flag variable.
-16. [x] Add a high-level game loop outline in `main`.
-17. [x] Add a clean branch for exiting the loop.
-18. [x] Add a placeholder call for replay prompt flow.
-19. [x] Add a stub replay prompt procedure.
-20. [x] Assemble and verify loop structure compiles.
+## Requirements
 
-### Phase 3: Deck lifecycle (structure first)
+- MASM toolchain
+- Irvine32 library and include files
+- Windows console environment
 
-21. [x] Add a deck-init procedure outline.
-22. [x] Add placeholder comments/labels for filling 52 cards.
-23. [x] Add a shuffle procedure outline.
-24. [x] Add placeholder loop structure for shuffle pass.
-25. [x] Add a deck index or draw pointer variable.
-26. [x] Add a draw-card procedure signature and return contract comment.
-27. [x] Add draw-card stub behavior (no full logic yet).
-28. [x] Add calls in round setup: init, shuffle, then deal.
-29. [x] Add an out-of-cards handling placeholder procedure.
-30. [x] Assemble and verify deck procedure wiring compiles.
+## Build And Run
 
-### Phase 4: Dealing and hand accounting
+Use either of the following methods:
 
-31. [x] Add procedure outline to deal opening hands.
-32. [x] Add placeholder call order for alternating player/dealer draws.
-33. [x] Add procedure outline to add a card to player hand.
-34. [x] Add procedure outline to add a card to dealer hand.
-35. [x] Add procedure outline to recalculate player total.
-36. [x] Add procedure outline to recalculate dealer total.
-37. [x] Add ace-handling placeholder plan in total procedures.
-38. [x] Add call points after each card draw to refresh totals.
-39. [x] Add sanity-check placeholders for max cards in hand.
-40. [x] Assemble and verify dealing flow compiles.
+1. Visual Studio project flow  
+   Put `blackjack.asm` into your MASM/Irvine32 Visual Studio project and build/run from Visual Studio.
 
-### Phase 5: Player turn flow
+2. Batch script flow  
+   Run the course build script directly:
 
-41. [x] Add player turn procedure outline.
-42. [x] Add loop skeleton for repeated player action.
-43. [x] Add prompt/display placeholder for hit-or-stand input.
-44. [x] Add input validation branch skeleton.
-45. [x] Add hit branch placeholder (draw + recompute + bust check).
-46. [x] Add stand branch placeholder (exit loop).
-47. [x] Add immediate blackjack check placeholder at turn start.
-48. [x] Add bust end-turn branch placeholder.
-49. [x] Add return status flag from player turn.
-50. [x] Assemble and verify turn-control branches compile.
+```bat
+asm_CSE3120.bat blackjack.asm
+```
 
-### Phase 6: Dealer turn and outcome resolution
+## How To Play
 
-51. [x] Add dealer turn procedure outline.
-52. [x] Add dealer loop skeleton for "hit until 17+" rule.
-53. [x] Add dealer bust check placeholder.
-54. [x] Add procedure outline for round result resolution.
-55. [x] Add result-priority branch order placeholder comments.
-56. [x] Add result state variable (player win/dealer win/push).
-57. [x] Add blackjack-vs-blackjack tie placeholder handling.
-58. [x] Add hooks for balance/score update procedure.
-59. [x] Add score update procedure stub.
-60. [x] Assemble and verify dealer + resolve flow compiles.
+1. Start the program.
+2. Press Enter at the startup prompt.
+3. Each player turn, enter:
+   - `1` for `Hit`
+   - `2` for `Stand`
+4. At round end, enter:
+   - `1` to play again
+   - `0` to quit
 
-### Phase 7: Rendering and user messaging
+## Rules Implemented
 
-61. [x] Add table-draw procedure outline.
-62. [x] Add player-hand render procedure outline.
-63. [x] Add dealer-hand render procedure outline.
-64. [x] Add hidden-hole-card placeholder branch for dealer render.
-65. [x] Add status-line render procedure outline.
-66. [x] Add startup screen/title procedure outline.
-67. [x] Add end-of-round summary render procedure outline.
-68. [x] Add call sequence for render points during round flow.
-69. [x] Add color/style placeholder calls (`SetTextColor`) where needed.
-70. [x] Assemble and verify UI procedure wiring compiles.
+- Standard total calculation:
+  - `2-10` are face value
+  - `J/Q/K` are 10
+  - `A` is 11 unless busting, then reduced to 1
+- Player busts above 21.
+- Dealer hits until total is at least 17.
+- Natural blackjack logic:
+  - if first two cards equal 21, it is treated as blackjack
+  - player/dealer natural blackjack tie resolves as push
+- Push occurs when totals match without busts.
 
-### Phase 8: Validation, polish, and final pass
+## Project Structure
 
-71. Run manual test pass for immediate blackjack cases.
-72. Run manual test pass for player bust paths.
-73. Run manual test pass for dealer bust paths.
-74. Run manual test pass for push/tie paths.
-75. Run manual test pass for multiple-ace totals.
-76. Run manual test pass for replay loop and clean reset.
-77. Refactor duplicated call patterns into helper procedures.
-78. Tighten comments so each procedure has purpose + inputs/outputs.
-79. Remove dead placeholders once real logic replaces them.
-80. Final assembly/build check and gameplay smoke test.
+- `blackjack.asm`: complete game source
+- `README.md`: project documentation
 
-## Definition of Done
+## Main Procedure Flow
 
-1. Program builds cleanly after each small edit batch.
-2. Full round lifecycle works: deal, player turn, dealer turn, resolve, replay.
-3. Blackjack rules are correctly enforced, including ace handling and pushes.
-4. Console output is readable and stable across repeated rounds.
+- `main`
+  - `InitializeGame`
+  - loop:
+    - `ResetRound`
+    - `RunGame`
+    - `PromptReplay`
+  - `ShutdownGame`
+
+- `RunGame`
+  - `SetupRound`
+  - `PlayerTurn`
+  - `DealerTurn` (skipped if player already busts/blackjacks)
+  - `ResolveRound`
+  - `RenderRound`
+
+## Rendering Notes
+
+- Console rendering uses Irvine32 routines (`Clrscr`, `SetTextColor`, `WriteString`, etc.).
+- Dealer second card/total are hidden until round resolution.
+- Score and cards remaining are shown each round.
