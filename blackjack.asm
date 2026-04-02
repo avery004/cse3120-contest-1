@@ -506,23 +506,23 @@ RenderRoundSummary PROC
     mov edx, OFFSET summaryPrefix
     call WriteString
 
-    cmp roundResult, ROUND_RESULT_PLAYER_WIN
-    je SummaryPlayerWin
-    cmp roundResult, ROUND_RESULT_DEALER_WIN
-    je SummaryDealerWin
-    cmp roundResult, ROUND_RESULT_PUSH
-    je SummaryPush
+    cmp DWORD PTR roundResult, ROUND_RESULT_PLAYER_WIN
+    je RRS_PlayerWin
+    cmp DWORD PTR roundResult, ROUND_RESULT_DEALER_WIN
+    je RRS_DealerWin
+    cmp DWORD PTR roundResult, ROUND_RESULT_PUSH
+    je RRS_Push
     mov edx, OFFSET summaryPending
-    jmp SummaryPrint
-SummaryPlayerWin:
+    jmp RRS_Print
+RRS_PlayerWin:
     mov edx, OFFSET summaryPlayerWin
-    jmp SummaryPrint
-SummaryDealerWin:
+    jmp RRS_Print
+RRS_DealerWin:
     mov edx, OFFSET summaryDealerWin
-    jmp SummaryPrint
-SummaryPush:
+    jmp RRS_Print
+RRS_Push:
     mov edx, OFFSET summaryPush
-SummaryPrint:
+RRS_Print:
     call WriteString
     call Crlf
     call Crlf
